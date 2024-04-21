@@ -1,5 +1,4 @@
-﻿
-#include <iostream>
+﻿#include <iostream>
 #include <vector>
 #include <Windows.h>
 
@@ -75,5 +74,6 @@ int main()
         arr[i] = arr[i] == min ? mean : arr[i];
         std::cout << arr[i] << " ";
     }
+    delete[] arr;
     return 0;
 }
