@@ -192,8 +192,6 @@ int main()
         WaitForSingleObject(markers[inputID], INFINITE);
         threads--;
 
-
-
         HANDLE* temp = new HANDLE[threads];
 
         CloseHandle(handlesCantContinue[offset]);
@@ -202,8 +200,6 @@ int main()
 
         delete[] handlesCantContinue;
         handlesCantContinue = temp;
-
-
 
         std::cout << "Array after the thread is stopped: \n";
         Print(arr, n);
@@ -214,7 +210,6 @@ int main()
         }
 
         CloseHandle(handlesContinue[offset]);
-
 
         int index{};
         for (int i = 0; i <= threads; ++i) {
@@ -229,7 +224,6 @@ int main()
             SetEvent(handlesContinue[i]);
         }
     }
-
 
     for (int i = 0; i < initialThreads; ++i) {
         CloseHandle(markers[i]);
