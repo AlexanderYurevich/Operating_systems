@@ -2,7 +2,7 @@
 #include <conio.h>
 #include <windows.h>
 #include <string>
-#include "employee.h"
+#include "../include/employee.h"
 
 const int COMMAND_LENGTH = 12;
 const int MS_PIPE_WAIT = 2000;

@@ -6,7 +6,7 @@
 #include <conio.h>
 #include <algorithm>
 #include <string>
-#include "employee.h"
+#include "../include/employee.h"
 
 int empCount;
 employee *emps;
