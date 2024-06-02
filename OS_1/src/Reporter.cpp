@@ -1,33 +1,32 @@
-#include "../include/Employee.h"
-#include <iostream>
 #include <fstream>
-#include <string>
+#include "../include/employee.h"
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[])
+{
     std::ifstream fin(argv[1], std::ios::binary);
-    if (!fin.is_open()) {
-        std::cerr << "Unable to open the input file";
-        return -1;
+    std::ofstream fout(argv[2]);
+    double salaryHour = atof(argv[3]);
+
+    int recAmount;
+    fin.read((char *)&recAmount, sizeof(int));
+    auto* records = new employee[recAmount];
+
+    for (int i = 0; i < recAmount; i++)
+    {
+        fin.read((char *)&records[i], sizeof(employee));
     }
 
-    std::string s = argv[2];
-    s += ".txt";
-    std::ofstream fout(s);
-
-    if (!fout.is_open()) {
-        std::cerr << "Unable to create the output file";
-        return -1;
-    }
-    int wage = atoi(argv[3]);
-    fout << "Report on file \"" << argv[1] << "\"\n";
-    int employeeAmount;
-    fin.read(reinterpret_cast<char*>(&employeeAmount), sizeof(int));
-    Employee entry;
-    for (int i = 0; i < employeeAmount; ++i) {
-        fin.read(reinterpret_cast<char*>(&entry), sizeof(Employee));
-        fout << entry.num << ' ' << entry.name << ' ' << entry.hours << ' ' << entry.hours * wage << '\n';
+    for (int i = 0; i < recAmount; i++)
+    {
+        fout << "ID: " << records[i].ID <<
+             "\tName: " << records[i].name <<
+             "\tHours: " << records[i].hours <<
+             "\tSalary: " << records[i].hours * salaryHour << "\n";
     }
     fin.close();
     fout.close();
+
+    delete[] records;
+
     return 0;
 }

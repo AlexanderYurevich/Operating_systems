@@ -12,7 +12,7 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
-add_executable(run_project src/main.cpp)
+add_executable(run_project src/OS_3.cpp)
 add_executable(test_project tests/tests.cpp)
 
 target_link_libraries(test_project gtest_main gmock)

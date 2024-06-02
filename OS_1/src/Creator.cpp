@@ -1,36 +1,41 @@
-﻿#include "../include/Employee.h"
 #include <iostream>
-#include <string>
 #include <fstream>
-#include <vector>
-int main(int argc, char* argv[]) {
+#include "../include/employee.h"
 
-    std::string s = argv[1];
-    s += ".bin";
-    std::ofstream fout(s, std::ios::binary);
+void getRecord(employee* record, int i, std::istream& input, std::ostream& output) {
+    output << "Employee " << (i + 1) << ":\n";
+    output << "Enter ID: ";
+    input >> record->ID;
+    output << "\n";
+    output << "Enter name: ";
+    input >> record->name;
+    output << "\n";
+    output << "Enter hours: ";
+    input >> record->hours;
+    output << "\n";
+}
 
-    if (!fout.is_open()) {
-        std::cerr << "Error opening the file for writing!" << std::endl;
-        return -1;
+int main(int argc, char* argv[])
+{
+    std::ofstream fout(argv[1], std::ios::binary);
+
+    int recAmount = atoi(argv[2]);
+    auto* records = new employee[recAmount];
+
+    std::cout << "\nType information about " << recAmount << " employees:\n";
+    for (int i = 0; i < recAmount; i++)
+    {
+        getRecord(&records[i], i);
     }
 
-    int employeeAmount = atoi(argv[2]);
-    std::vector <Employee> records(employeeAmount);
-
-    for (int i = 0; i < employeeAmount; ++i) {
-        std::cout << "Enter the emoployee's ID:";
-        std::cin >> records[i].num;
-        std::cout << "Enter the name of an employee:";
-        std::cin >> records[i].name;
-        std::cout << "Enter the hours of an employee number:";
-        std::cin >> records[i].hours;
+    fout.write((char*)&recAmount, sizeof(int));
+    for (int i = 0; i < recAmount; i++) {
+        fout.write((char*)&records[i], sizeof(employee));
     }
 
-    fout.write(reinterpret_cast<char*>(&employeeAmount), sizeof(int)); // amount of records
-
-    for (int i = 0; i < employeeAmount; ++i) {
-        fout.write(reinterpret_cast<char*>(&records[i]), sizeof(Employee));
-    }
     fout.close();
+
+    delete[] records;
+
     return 0;
 }
